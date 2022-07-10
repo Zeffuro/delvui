@@ -21,6 +21,24 @@ namespace DelvUI.Interface.PartyCooldowns
             Data = data;
             SourceId = sourceID;
             Member = member;
+            ApplyTraitEnhanced();
+        }
+
+        private void ApplyTraitEnhanced()
+        {
+            if (Data.TraitEnhanced == null)
+            {
+                return;
+            }
+            TraitEnhanced trait = Data.TraitEnhanced;
+
+            if (!(Member?.Level >= trait.Level))
+            {
+                return;
+            }
+
+            Data.CooldownDuration = trait.CooldownDuration == 0 ? Data.CooldownDuration : trait.CooldownDuration;
+            Data.EffectDuration = trait.EffectDuration == 0 ? Data.EffectDuration : trait.EffectDuration;
         }
 
         public float EffectTimeRemaining()
@@ -48,6 +66,13 @@ namespace DelvUI.Interface.PartyCooldowns
         }
     }
 
+    public class TraitEnhanced
+    {
+        public uint Level = 0;
+        public int CooldownDuration = 0;
+        public int EffectDuration = 0;
+    }
+
     public class PartyCooldownData : IEquatable<PartyCooldownData>
     {
         public bool Enabled = true;
@@ -66,6 +91,8 @@ namespace DelvUI.Interface.PartyCooldowns
 
         public int Priority = 0;
         public int Column = 1;
+
+        public TraitEnhanced? TraitEnhanced = null;
 
         [JsonIgnore] public uint IconId = 0;
         [JsonIgnore] public string Name = "";
