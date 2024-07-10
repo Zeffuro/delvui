@@ -39,6 +39,7 @@ namespace DelvUI
         public static IPartyList PartyList { get; private set; } = null!;
         public static IPluginLog Logger { get; private set; } = null!;
         public static ITextureProvider TextureProvider { get; private set; } = null!;
+        public static ITextureSubstitutionProvider TextureSubstitutionProvider { get; private set; } = null!;
         public static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
 
         public static ISharedImmediateTexture? BannerTexture;
@@ -71,6 +72,7 @@ namespace DelvUI
             ITargetManager targetManager,
             IPluginLog logger,
             ITextureProvider textureProvider,
+            ITextureSubstitutionProvider textureSubstitutionProvider,
             IAddonLifecycle addonLifecycle
         )
         {
@@ -91,6 +93,7 @@ namespace DelvUI
             UiBuilder = PluginInterface.UiBuilder;
             Logger = logger;
             TextureProvider = textureProvider;
+            TextureSubstitutionProvider = textureSubstitutionProvider;
             AddonLifecycle = addonLifecycle;
 
             if (pluginInterface.AssemblyLocation.DirectoryName != null)
